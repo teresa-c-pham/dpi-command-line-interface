@@ -73,4 +73,12 @@ class TestInventory < Minitest::Test
     assert_equal 3, inventory.dinner_items.length, "Add Dinner Item method failed"
   end
 
+  def test_update_item
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
+    
+    inventory = Inventory.new(lunch, dinner)
+    inventory.update_item("fiRECRACKER shrimp", 10, 3.50)
+    assert_equal 10, lunch[0].amount, "Update Menu Item method failed"
+  end
 end

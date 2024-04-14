@@ -23,6 +23,41 @@ class Inventory
     end
   end
 
+  def update_item(item_name, amount, cost)
+    # Make sure item name follows proper format
+    name = item_name.downcase.capitalize
+
+    lunch_check = false
+    # First Check for Menu Item in Lunch Menu
+    self.lunch_items.each do |item|
+      # Update item amount and/or cost
+      if item.name == name
+        lunch_check = true
+        item.amount = amount
+        item.cost = cost
+      end
+    end
+
+    # Then Check for Menu Item in Dinner Menu
+    dinner_check = false
+    if lunch_check
+      self.dinner_items.each do |item|
+        # Update item amount and/or cost
+        if item.name == name
+          dinner_check = true
+          item.amount = amount
+          item.cost = cost
+        end
+      end
+    end
+
+    # If item is not found in menu, do not update
+    if (!(lunch_check) && !(dinner_check))
+      pp "Menu Item not found."
+    end
+  end
+
+
   # Helper Functions
 
   # Check if Item exists in Array
@@ -32,6 +67,7 @@ class Inventory
     end
     return false
   end
+
 end
 
 
@@ -53,7 +89,7 @@ class Item
       raise TypeError, 'Menu item name must be a string'
     end
 
-    @name = value.capitalize
+    @name = value.downcase.capitalize
   end
 
   def amount=(value)
