@@ -1,62 +1,76 @@
 require 'minitest/autorun'
 require './inventory.rb'
 
-class TestLunchInventory < Minitest::Test
-  def test_lunch_initialize
-    shrimp = Lunch.new("Firecracker Shrimp", 6, 3.50)
-    assert_equal 6, shrimp.amount, "Set Firecracker Shrimp amount method failed"
+class TestMenuItem < Minitest::Test
+  def test_initialize
+    shrimp = Item.new("Firecracker Shrimp", 6, 3.50)
+    assert_equal 6, shrimp.amount, "Set Item amount method failed"
   end
 
-  def test_lunch_change_cost
-    calamari = Lunch.new("Calamari", 10, 5.25)
+  def test_change_cost
+    calamari = Item.new("Calamari", 10, 5.25)
     calamari.cost = 6.25
-    assert_equal 6.25, calamari.cost, "Set Calamari cost method failed"
+    assert_equal 6.25, calamari.cost, "Set Item cost method failed"
   end
 
-  def test_lunch_change_name
-    miso = Lunch.new("Miso", 10, 5.25)
+  def test_change_name
+    miso = Item.new("Miso", 10, 5.25)
     miso.name = "miso soup"
-    assert_equal "Miso soup", miso.name, "Set Miso Soup name method failed"
+    assert_equal "Miso soup", miso.name, "Set Item name method failed"
   end
 
-  def test_lunch_change_amount
-    crab = Lunch.new("crab rangoon", 5, 3.00)
+  def test_change_amount
+    crab = Item.new("crab rangoon", 5, 3.00)
     crab.amount = 8
-    assert_equal 8, crab.amount, "Set Crab Rangoon amount method failed"
+    assert_equal 8, crab.amount, "Set Item amount method failed"
   end
 
-  def test_lunch_total_cost
-    eggroll = Lunch.new("eggroll", 5, 0.65)
+  def test_total_cost
+    eggroll = Item.new("eggroll", 5, 0.65)
     assert_equal 3.25, eggroll.total_cost, "Total cost method failed"
   end
 end
 
-class TestDinnerInventory < Minitest::Test
-  def test_dinner_initialize
-    pho = Dinner.new("Pho", 1, 8.50)
-    assert_equal 8.5, pho.cost, "Initialize Dinner method failed"
+class TestInventory < Minitest::Test
+  def test_initialize
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
+    
+    inventory = Inventory.new(lunch, dinner)
+
+    assert_equal lunch, inventory.lunch_items, "Set initialized items method failed"
   end
 
-  def test_dinner_change_cost
-    chicken = Dinner.new("orange Chicken", 10, 7.25)
-    chicken.cost = 6.75
-    assert_equal 6.75, chicken.cost, "Set Dinner cost method failed"
+  def test_check_item_list
+    item = Item.new("Firecracker Shrimp", 1, 7.75)
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
+    
+    inventory = Inventory.new(lunch, dinner)
+
+    assert_equal true, inventory.check_item_in_list(item, lunch), "Check Item in List method failed"
   end
 
-  def test_dinner_change_name
-    lobster = Dinner.new("lobster", 10, 5.25)
-    lobster.name = "lobster tails"
-    assert_equal "Lobster tails", lobster.name, "Set Dinner name method failed"
+  def test_add_lunch
+    item = Item.new("eggroll", 5, 0.65)
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
+    
+    inventory = Inventory.new(lunch, dinner)
+    inventory.add_lunch(item)
+
+    assert_equal 3, inventory.lunch_items.length, "Add Lunch Item method failed"
   end
 
-  def test_dinner_change_amount
-    noodles = Dinner.new("stir-fry noodles", 1, 6.00)
-    noodles.amount = 2
-    assert_equal 2, noodles.amount, "Set Dinner amount method failed"
+  def test_add_dinner
+    item = Item.new("combination fried rice", 1, 7.75)
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
+    
+    inventory = Inventory.new(lunch, dinner)
+    inventory.add_dinner(item)
+
+    assert_equal 3, inventory.dinner_items.length, "Add Dinner Item method failed"
   end
 
-  def test_dinner_total_cost
-    eggroll = Dinner.new("eggroll", 5, 0.65)
-    assert_equal 3.25, eggroll.total_cost, "Total cost method failed"
-  end
 end
