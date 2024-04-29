@@ -20,3 +20,26 @@ class TestEmployee < Minitest::Test
     assert_equal "not working", employee.status, "Set Employee clock in failed"
   end
 end
+
+class TestEmployees < Minitest::Test
+  def test_initialize
+    employees = Employees.new
+    assert_equal "Boss", employees.employees[0].name, "Initialize Employees array failed."
+  end
+
+  def test_add_employees
+    employees = Employees.new()
+    employees.add_employee("John Doe", 141)
+    employees.add_employee("Jane Doe", 777)
+    assert_equal 3, employees.employees.length, "Add Employees to array failed"
+  end
+
+  def test_del_employees
+    employees = Employees.new()
+    employees.add_employee("John Doe", 141)
+    employees.add_employee("Jane Doe", 777)
+    employees.del_employee(141)
+    assert_equal 2, employees.employees.length, "Delete Employees from array failed"
+  end
+
+end
