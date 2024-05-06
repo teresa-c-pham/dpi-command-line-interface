@@ -1,4 +1,6 @@
 # Collection of all Employees
+require 'time'
+
 class Employees
   attr_accessor :employees
 
@@ -28,6 +30,12 @@ class Employees
       self.employees.delete_at(index)
       puts "Successfully removed #{name} ##{id}."
     end
+
+  # Clock in a specific employee
+  def clock_in(id)
+    self.employees.each do |employee|
+      
+    end
   end
 
   # Helper Functions
@@ -48,11 +56,13 @@ class Employee
   attr_accessor :name
   attr_accessor :id
   attr_accessor :status
+  attr_accessor :clock_time
 
   def initialize(name, id)
     self.name = name
     self.id = id
     self.status = "not working"
+    self.clock_time = Time.parse("1:00")
   end
 
   def name=(value)
@@ -87,6 +97,7 @@ class Employee
       puts "#{self.name} has already clocked in."
     else
       self.status = "working"
+      self.clock_time = Time.now()
       puts "#{self.name} is now clocked in."
     end
   end
@@ -97,6 +108,12 @@ class Employee
     else
       self.status = "not working"
       puts "#{self.name} is now clocked out."
+
+      # Output total time worked for that day
+      total_seconds = (Time.now - self.clock_time)
+      hours = (total_seconds / 3600).floor
+      minutes = (total_seconds / 60).floor
+      puts "#{self.name} has worked for #{hours}:#{minutes}"
     end
   end
 end

@@ -1,5 +1,12 @@
 require 'time'
 
+# TODO
+# clock_in
+# clock_out
+# take_order
+# clock_in employee through Employees class
+# function to display guest's order
+
 def clock_in
   puts "Enter your Employee ID:"
   id = gets.chomp
@@ -15,7 +22,16 @@ end
 def take_order
   puts "Guest Name:"
   name = gets.chomp
+  order = Order.new(name)
 
+  # List available menu items for designated time: Lunch/Dinner
+  dinner = Time.parse "3:00 pm"
+  if Time.now < dinner
+    items = inventory.lunch_items
+  else
+    items = inventory.dinner_items
+  end
+  
 end
 
 def update_inventory
@@ -65,5 +81,11 @@ def welcome
     input = gets.chomp
   end
 end
+
+
+
+
+
+
 
 welcome
