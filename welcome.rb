@@ -21,7 +21,6 @@ end
 def update_inventory
   puts "Enter Inventory Item Name:"
   item = gets.chomp
-
 end
 
 
