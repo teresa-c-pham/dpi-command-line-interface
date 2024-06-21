@@ -36,7 +36,7 @@ class Order
   def total_cost
     cost = 0.0
     self.items.each do |item|
-      cost += item.total_cost
+      cost += item.cost
     end
 
     return cost
