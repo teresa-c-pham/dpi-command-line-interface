@@ -3,26 +3,36 @@ require './order.rb'
 require './inventory.rb'
 
 class Welcome
-  attr_accessor :items    # list of items for sale
-  attr_accessor :orders   # list of customer orders taken
+  attr_accessor :items     # list of items for sale
+  attr_accessor :orders    # list of customer orders taken
+  attr_accessor :inventory # class of menu items for lunch/dinner
+  attr_accessor :current_time
 
   def initialize
-    # List of available menu items for lunch and dinner
+    # Create Inventory of menu items for lunch and dinner
     lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
     dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
 
+    self.inventory = Inventory.new(lunch, dinner)
+
     # List available menu items for designated time: Lunch/Dinner
     dinner_time = Time.parse "3:00 pm"
+
+    # Set default menu as dinner
+    self.current_time = "dinner"
+
     if Time.now < dinner_time
-      self.items = lunch
+      puts "It is now lunch"
+      self.items = inventory.lunch_items
+      self.current_time = "lunch"
     else
-      self.items = dinner
+      self.items = inventory.dinner_items
     end
 
     # Create an empty map to contain all orders
     self.orders = Hash.new
   end
-  
+
   # TODO
   # clock_in
   # clock_out
@@ -119,12 +129,61 @@ class Welcome
     end
   end
 
-  # For Employee Use: alter menu item name, quantity, and/or cost
+  # For Employee Use: alter menu item quantity and/or cost
   def update_inventory
     puts "Enter Inventory Item Name:"
     item = gets.chomp
-  end
 
+    # Make sure item name follows proper format
+    name = item.downcase.capitalize
+
+    item_found = false # check if item exists in inventory
+    old_cost = 0.0
+    old_amount = 0
+
+    # Find old cost and amount
+    self.items.each do |item|
+      if item.name == name
+        old_cost = item.cost
+        old_amount = item.amount
+        item_found = true
+      end
+    end
+
+    # If Inventory item does not exist, add to inventory
+    if !(item_found)
+      puts "New Cost:"
+      cost = gets.chomp.to_f
+
+      puts "New Amount:"
+      amount = gets.chomp.to_i
+
+      # Add new inventory item to items list
+      if current_time == "lunch"
+        self.inventory.add_lunch(Item.new(name, amount, cost))
+      else
+        self.inventory.add_dinner(Item.new(name, amount, cost))
+      end
+    else
+      # Inventory item does exist, update only
+      puts "1. Change Cost"
+      puts "2. Change Amount"
+      option = gets.chomp
+
+      case option
+      when "1"
+        # Update item cost
+        puts "New Cost:"
+        cost = gets.chomp.to_f
+        self.inventory.update_item(item, old_amount, cost)
+      when "2"
+        # Update item amount
+        puts "New Amount:"
+        amount = gets.chomp.to_i
+        self.inventory.update_item(item, amount, old_cost)
+      end
+    end
+  end
 
   # Main function to run the application
   def welcome
