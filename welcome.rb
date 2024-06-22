@@ -1,12 +1,14 @@
 require 'time'
 require './order.rb'
 require './inventory.rb'
+require './employees.rb'
 
 class Welcome
-  attr_accessor :items     # list of items for sale
-  attr_accessor :orders    # list of customer orders taken
-  attr_accessor :inventory # class of menu items for lunch/dinner
-  attr_accessor :current_time
+  attr_accessor :items        # list of items for sale
+  attr_accessor :orders       # list of customer orders taken
+  attr_accessor :inventory    # class of menu items for lunch/dinner
+  attr_accessor :current_time # Lunch or Dinner time
+  attr_accessor :employees    # list of employees in database
 
   def initialize
     # Create Inventory of menu items for lunch and dinner
@@ -31,23 +33,37 @@ class Welcome
 
     # Create an empty map to contain all orders
     self.orders = Hash.new
-  end
 
-  # TODO
-  # clock_in
-  # clock_out
-  # clock_in employee through Employees class
+    # Create list of employees in database
+    self.employees = Employees.new()
+    self.employees.add_employee("John Doe", 002)
+    self.employees.add_employee("Jane Doe", 003)
+    self.employees.add_employee("Derek Perez", 004)
+    self.employees.add_employee("Diana Munoz", 005)
+  end
 
   def clock_in
     puts "Enter your Employee ID:"
     id = gets.chomp
-    puts "Employee #{id} has clocked in."
+    
+    # Check if id was found
+    if self.employees.clock(id.to_i)
+      puts "Employee #{employee.id}: #{employee.name} has clocked in."
+    else
+      puts "Invalid Employee ID"
+    end
   end
 
   def clock_out
     puts "Enter your Employee ID:"
     id = gets.chomp
-    puts "Employee #{id} has clocked out."
+    
+    # Check if id was found
+    if self.employees.clock(id.to_i)
+      puts "Employee #{employee.id}: #{employee.name} has clocked out."
+    else
+      puts "Invalid Employee ID"
+    end
   end
 
   # Function to take a customer's order

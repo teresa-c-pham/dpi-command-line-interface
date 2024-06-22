@@ -30,13 +30,18 @@ class Employees
       self.employees.delete_at(index)
       puts "Successfully removed #{name} ##{id}."
     end
-
-  # Clock in a specific employee
-  def clock_in(id)
-    self.employees.each do |employee|
-      
-    end
   end
+
+  # Clock in/out a specific employee
+  def clock(id)
+    self.employees.each do |employee|
+      if employee.id == id
+        return true
+      end
+    end
+    return false
+  end
+
 
   # Helper Functions
 
@@ -63,6 +68,7 @@ class Employee
     self.id = id
     self.status = "not working"
     self.clock_time = Time.parse("1:00")
+    puts "ID is: #{id}"
   end
 
   def name=(value)
