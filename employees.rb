@@ -32,16 +32,41 @@ class Employees
     end
   end
 
-  # Clock in/out a specific employee
-  def clock(id)
+  # Clock io a specific employee
+  def clock_in(id)
+    # Check if id was found
+    id_found = false
     self.employees.each do |employee|
       if employee.id == id
-        return true
+        id_found = true
+
+        # Clock in through Employee Class
+        employee.clock_in
       end
     end
-    return false
+
+    if !(id_found)
+      puts "Invalid Employee ID"
+    end
   end
 
+    # Clock out a specific employee
+    def clock_out(id)
+      # Check if id was found
+      id_found = false
+      self.employees.each do |employee|
+        if employee.id == id
+          id_found = true
+  
+          # Clock out through Employee Class
+          employee.clock_out
+        end
+      end
+  
+      if !(id_found)
+        puts "Invalid Employee ID"
+      end
+    end
 
   # Helper Functions
 

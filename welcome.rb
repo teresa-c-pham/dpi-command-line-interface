@@ -46,24 +46,16 @@ class Welcome
     puts "Enter your Employee ID:"
     id = gets.chomp
     
-    # Check if id was found
-    if self.employees.clock(id.to_i)
-      puts "Employee #{employee.id}: #{employee.name} has clocked in."
-    else
-      puts "Invalid Employee ID"
-    end
+    # Clock in through Employees Class
+    self.employees.clock_in(id.to_i)
   end
 
   def clock_out
     puts "Enter your Employee ID:"
     id = gets.chomp
     
-    # Check if id was found
-    if self.employees.clock(id.to_i)
-      puts "Employee #{employee.id}: #{employee.name} has clocked out."
-    else
-      puts "Invalid Employee ID"
-    end
+    # Clock out through Employees Class
+    self.employees.clock_out(id.to_i)
   end
 
   # Function to take a customer's order
