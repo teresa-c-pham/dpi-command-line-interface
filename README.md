@@ -304,7 +304,8 @@ What would you like to order?
 0. End Order
 ```
 
-Now the new menu item **French fries** is ready to order!
+Now the new menu item **French fries** is ready to order! Press `0` to end the order.
+
 
 ## Step 5 - Clock Out
 After a long day's work, it is time to clock out. Type `2` in the terminal to clock out for work.
