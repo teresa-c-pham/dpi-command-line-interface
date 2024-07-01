@@ -12,7 +12,7 @@ class Welcome
 
   def initialize
     # Create Inventory of menu items for lunch and dinner
-    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25)]
+    lunch = [Item.new("Firecracker Shrimp", 6, 3.50), Item.new("Calamari", 10, 5.25), Item.new("combination fried rice", 1, 7.75)]
     dinner = [Item.new("crab rangoon", 5, 3.00), Item.new("Miso", 10, 5.25)]
 
     self.inventory = Inventory.new(lunch, dinner)

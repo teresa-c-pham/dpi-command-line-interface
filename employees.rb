@@ -14,9 +14,6 @@ class Employees
     employee = Employee.new(name, id)
     if !(check_employee_exists(id))
       self.employees.push(employee)
-      puts "#{name} ##{id} added to the database."
-    else
-      puts "Employee #{id} already exists in the database."
     end
   end
 
@@ -93,7 +90,6 @@ class Employee
     self.id = id
     self.status = "not working"
     self.clock_time = Time.parse("1:00")
-    puts "ID is: #{id}"
   end
 
   def name=(value)
