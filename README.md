@@ -335,13 +335,11 @@ Good bye!
 
 # Application Components
 
-The application consists of the following components:
-* README.md - Overview of the application components and project
+The main application consists of the following components:
 * welcome.rb - Main Ruby file to run the application
 * Employees.rb - **Employees** Class to identify all employees working at the restaurant. Employees are each identified using the **Employee** Class which contains employee's name, worker ID, status of working, and when they clocked in for work
 * Inventory.rb - **Inventory** Class to identify food items on lunch menu and on dinner menu. Each food item is identified using the **Item** Class which contains the item name, cost, and amount in stock
 * Order.rb - **Order** Class to identify customer's food order which contains the customer's name and items ordered
-* tests folder - Tests classes required and used in **welcome.rb** using `minitest/autorun`
 
 ## welcome.rb
 
@@ -351,12 +349,43 @@ The Employees.rb file consists of two classes: Employees and Employee. <br>
 
 The Employee Class contains four class variables: the employee name `name`, worker ID `id`, whether they are currently working or not `status`, and the time they clocked in for work `clock_time`.
 
+* Each employee can be clocked in and out of the system using `employee.clock_in` and `employee.clock_out` respectively. Each clock status outputs a different message to the terminal depending if the employee has already clocked in/out or not.
+
 The Employees Class contains only one class variable: an array of employees working for the restaurant `employees`.
 
-## Inventory.rb
+* To add employees to the database, `employees.add_employee` is called with two parameters: name and id. A helper function `check_employee_exists(id)` is used to verify whether the employee already exists in the database and to avoid redundancy in the code. 
+* Removing employees in the database uses the method `employees.del_employee(id)`, however, instead of using the custom helper function, the built in function `array.find_index` is used to effectively find the first index of the id in our array.
 
+* To clock in a specific employee, their worker ID is requested using `gets.chomp` and the `employees.clock_in` method calls the clock_in method from employee to confirm the employee's working status. To clock out a specific employee uses the same process except calls `employees.clock_out` instead.
+
+## Inventory.rb
+The Inventory.rb file consists of two classes: Item and Inventory. <br>
+
+The Item Class contains three class variables: the item name `name`, the item's unit cost `cost`, and the amount currently in stock `amount`.
+
+
+
+The Inventory Class contains two class variables: an array of items  for sale during lunch hours `lunch_items`, and an array of items for sale during dinner hours `dinner_items`. Each array contains items which are instantiated using `Item.new()`.
 
 ## Order.rb
 
 
 # Testing
+Each class used in **welcome.rb** is tested under the tests folder using `minitest/autorun`. Assuming we are still in the project's working directory, each of the four ruby test files can be run using `ruby /tests/...` followed by the name of the test file.
+For example, `test_employees.rb` can be run using `ruby tests/test_employees.rb` which generates the following output:
+```
+Run options: --seed 24782
+
+# Running:
+
+..Successfully removed John doe #141.
+..John doe is now clocked in.
+.Jane doe is now clocked in.
+Jane doe is now clocked out.
+Jane doe has worked for 0:0
+.
+
+Finished in 0.002118s, 2833.1782 runs/s, 2833.1782 assertions/s.
+
+6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
+```
