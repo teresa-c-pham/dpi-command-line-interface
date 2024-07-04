@@ -342,7 +342,16 @@ The main application consists of the following components:
 * Order.rb - **Order** Class to identify customer's food order which contains the customer's name and items ordered
 
 ## welcome.rb
+The welcome.rb file is formatted as a class to run the application while incorporating elements from employees.rb, inventory.rb, and order.rb.
 
+The Welcome Class contains five class variables: the current items in inventory `inventory`, whether it is currently lunch or dinner time `current_time`, list of employees currently in the database `employees`, list of customer orders taken `orders`, and list of items currently for sale for the given time `items`.
+
+* Using the `employees` list, an employee can clock in/out using `Welcome.clock_in` and `Welcome.clock_out` respectively and entering their worker ID. This clock in/out method calls the clock method from Employees Class to clock in a specific employee and returns a message in the terminal if an ID is found or not.
+* The `current_time` is determined such that if the current time is on or after 3pm, it is `"dinner"`, else it is currently `"lunch"`. Using this information, the `Welcome.take_order` method reads the respective array of items to prompt the employee to select an item for the customer's order.
+* To review any customer's order, `Welcome.review_order` is called to list out each set of order details by customer name in the `orders` list. Then, if a valid customer name is selected by numeric input, the order details are outputed to the terminal.
+<u>Note</u>: Adjusting order contents has not been implemented yet from the `Welcome.review_order` method.
+
+* To update a menu item's quantity in stock and/or unit cost, `Welcome.update_inventory` is called in which if a new item is identified, that particular item is added to the current list `items` as well as the specific inventory's array (i.e. lunch_items or dinner_items). If an item already exists in the menu, the option to change cost or amount is prompted in the terminal before making any updates in inventory.
 
 ## Employees.rb
 The Employees.rb file consists of two classes: Employees and Employee. <br>
