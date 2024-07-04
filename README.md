@@ -363,11 +363,25 @@ The Inventory.rb file consists of two classes: Item and Inventory. <br>
 
 The Item Class contains three class variables: the item name `name`, the item's unit cost `cost`, and the amount currently in stock `amount`.
 
+* `Item.total_cost` is a method used to return the total cost of the amount currently in stock times the unit cost. This is especially useful to estimate if current sales for a particular item is generating profit for a business.
 
+The Inventory Class contains two class variables: an array of items for sale during lunch hours `lunch_items`, and an array of items for sale during dinner hours `dinner_items`. Each array contains items which are instantiated using `Item.new()`.
 
-The Inventory Class contains two class variables: an array of items  for sale during lunch hours `lunch_items`, and an array of items for sale during dinner hours `dinner_items`. Each array contains items which are instantiated using `Item.new()`.
+* To add a lunch menu item, `Inventory.add_lunch(item)`, the array method `array.push` is used to append the item to the `lunch_items` array.
+* Similarly, adding a dinner menu item calls `Inventory.add_dinner(item)` which uses `array.push` to append the item to the `dinner_items` array.
+<u>Note</u>: Both of the methods mentioned above utilize `Inventory.check_item_in_list(item, array)` as a helper function to efficiently find if an item already exists in the array in O(N) time.
+* To update an item's current amount in stock and/or unit price, `Inventory.update_item(item_name, amount, cost)` is used to search for the menu item in both the lunch_items array and the dinner_items array. Because each array is checked separately, changing elements in one array does not impact the other array.
 
 ## Order.rb
+The Order.rb file consists of one class: Order.
+
+The Order Class contains two class variables: the customer's name `name`, and the array of items the customer has ordered `items`.
+
+* An item can be added to an order using `order.add_item(item)` which calls the array method `array.append` to add the item to the `items` array.
+* Similarly, an item is removed using `order.remove_item` which calls the array method `array.pop` to remove the last item from the `items` array.
+
+<u>Note</u>: This implementation can only remove the last item added to an order. In addition, if an order is empty, no changes are made to avoid errors.
+* To calculate the final cost, `order.total_cost` is used to traverse through the entire order and sum up the cost in O(N) time.
 
 
 # Testing
