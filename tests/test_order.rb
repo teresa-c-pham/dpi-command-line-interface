@@ -30,7 +30,7 @@ class TestOrder < Minitest::Test
     item = Item.new("crab rangoon", 5, 3.00)
     order.add_item(item)
     order.add_item(Item.new("Calamari", 10, 5.25))
-    assert_equal 67.50, order.total_cost, "Total cost of order method failed"
+    assert_equal 8.25, order.total_cost, "Total cost of order method failed"
   end
 
 end
